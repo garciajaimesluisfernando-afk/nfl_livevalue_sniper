@@ -9,6 +9,7 @@ class PartidoEnVivo:
         self.tiempo_restante = "Q1 15:00"
         self.momio_actual_local = self.momio_pregame_local
         self.momio_actual_visitante = self.momio_pregame_visitante
+        self.ya_alertado = False
         
         
     def actualizar_datos(self, marcador_local_actualizado, marcador_visitante_actualizado, tiempo_restante_actualizado, 
@@ -29,8 +30,12 @@ class PartidoEnVivo:
             diferencia = self.marcador_visitante - self.marcador_local
             
             
-            if diferencia >= 7 and self.momio_actual_local > 105:
+            if diferencia >= 7 and diferencia <= 17 and self.momio_actual_local > 105 and self.momio_actual_local <= 400 and not self.ya_alertado:
+                self.ya_alertado = True
                 return True
+            
+            if diferencia < 7:
+                self.ya_alertado = False
             
             
             
@@ -38,7 +43,11 @@ class PartidoEnVivo:
             
             diferencia = self.marcador_local - self.marcador_visitante
             
-            if diferencia >= 7 and self.momio_actual_visitante > 105:
+            if diferencia >= 7 and diferencia <= 17 and self.momio_actual_visitante > 105 and self.momio_actual_visitante <= 400 and not self.ya_alertado:
+                self.ya_alertado = True
                 return True
+            
+            if diferencia < 7:
+                self.ya_alertado = False
             
         return False
